@@ -1,7 +1,6 @@
 package com.vinay.blog_app.model;
 
 import jakarta.persistence.*;
-import org.hibernate.mapping.ToOne;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +16,7 @@ public class Post {
     @ManyToOne
     private Category category;
     @ManyToOne
-    private User user;
+    private AuthUser user;
     private LocalDateTime createdAt;
 
     public void setCreatedAt(){
@@ -27,7 +26,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(User user, Category category, String content, String title) {
+    public Post(AuthUser user, Category category, String content, String title) {
         this.user = user;
         this.category = category;
         this.content = content;

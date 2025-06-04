@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class User {
+public class AuthUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(unique = true)
     private String email;
-    private String profileImageUrl;
-    private List<Long> posts;
+    private String password;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -23,13 +23,13 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
-    public User() {
+    public AuthUser() {
     }
 
-    public User(String name, String email, String profileImageUrl, List<Long> posts) {
+    public AuthUser(String name, String email, String password, List<Post> posts) {
         this.name = name;
         this.email = email;
-        this.profileImageUrl = profileImageUrl;
+        this.password = password;
         this.posts = posts;
     }
 
@@ -57,27 +57,19 @@ public class User {
         this.email = email;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public String getPassword() {
+        return password;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public List<Long> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Long> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

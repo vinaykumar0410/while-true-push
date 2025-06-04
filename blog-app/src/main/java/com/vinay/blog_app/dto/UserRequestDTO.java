@@ -4,7 +4,16 @@ public class UserRequestDTO {
 
     private String name;
     private String email;
-    private String password;
+    private String profileImageUrl;
+
+    public UserRequestDTO() {
+    }
+
+    public UserRequestDTO(String name, String email, String profileImageUrl) {
+        this.name = name;
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public String getName() {
         return name;
@@ -22,11 +31,11 @@ public class UserRequestDTO {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getProfileImageUrl() {
+        return profileImageUrl;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }
