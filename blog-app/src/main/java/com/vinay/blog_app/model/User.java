@@ -3,6 +3,7 @@ package com.vinay.blog_app.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private String profileImageUrl;
-    private List<Long> posts;
+    private List<Long> posts = new ArrayList<>();
     private LocalDateTime createdAt;
 
     @PrePersist
