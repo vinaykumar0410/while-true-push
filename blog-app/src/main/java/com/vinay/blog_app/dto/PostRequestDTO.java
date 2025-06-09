@@ -30,4 +30,7 @@ public class PostRequestDTO {
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
+
+
+
 }
