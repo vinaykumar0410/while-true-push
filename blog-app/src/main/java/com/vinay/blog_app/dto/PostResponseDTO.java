@@ -5,7 +5,7 @@ public class PostResponseDTO {
     private Long id;
     private String title;
     private String content;
-    private String categoryName;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class PostResponseDTO {
         this.content = content;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

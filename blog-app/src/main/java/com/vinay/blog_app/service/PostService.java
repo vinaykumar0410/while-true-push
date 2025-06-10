@@ -15,5 +15,4 @@ public interface PostService {
     List<PostResponseDTO> getPostsByCategory(Long categoryId);
     List<PostResponseDTO> getPostsByUser(Long userId);
 
-
 }
