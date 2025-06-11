@@ -14,6 +14,6 @@ public interface UserService {
     void deleteUser(Long userId);
     UserResponseDTO getUserById(Long userId);
     List<UserResponseDTO> getAllUsers();
-
+    UserResponseDTO findUserByJwtToken(String jwt);
 
 }

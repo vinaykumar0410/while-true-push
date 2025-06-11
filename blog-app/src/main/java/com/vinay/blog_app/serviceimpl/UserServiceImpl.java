@@ -5,6 +5,7 @@ import com.vinay.blog_app.dto.UserRequestDTO;
 import com.vinay.blog_app.dto.UserResponseDTO;
 import com.vinay.blog_app.model.User;
 import com.vinay.blog_app.repository.UserRepository;
+import com.vinay.blog_app.security.JwtProvider;
 import com.vinay.blog_app.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -65,6 +68,13 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(user -> modelMapper.map(user, UserResponseDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponseDTO findUserByJwtToken(String jwt) {
+        String email = jwtProvider.getEmailFromToken(jwt);
+        User user = userRepository.findByEmail(email);
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 
 }
