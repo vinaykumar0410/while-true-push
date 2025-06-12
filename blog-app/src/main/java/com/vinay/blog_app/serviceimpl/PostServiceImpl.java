@@ -2,6 +2,7 @@ package com.vinay.blog_app.serviceimpl;
 
 import com.vinay.blog_app.Exception.CategoryNotFoundException;
 import com.vinay.blog_app.Exception.PostNotFoundException;
+import com.vinay.blog_app.Exception.UnauthorizedActionException;
 import com.vinay.blog_app.Exception.UserNotFoundException;
 import com.vinay.blog_app.dto.PostRequestDTO;
 import com.vinay.blog_app.dto.PostResponseDTO;
@@ -53,6 +54,9 @@ public class PostServiceImpl implements PostService {
         User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User Not Found With ID " + userId)
         );
+        if(!existingUser.getPosts().contains(existingPost.getId())){
+            throw new UnauthorizedActionException("You can't update other's post");
+        }
         Category category = categoryRepository.findById(postRequestDTO.getCategoryId()).orElseThrow(
                 () -> new CategoryNotFoundException("Category Not Found With ID " + postRequestDTO.getCategoryId())
         );
@@ -68,10 +72,13 @@ public class PostServiceImpl implements PostService {
         Post existingPost = postRepository.findById(postId).orElseThrow(
                 () -> new PostNotFoundException("Post Not Found With ID " + postId)
         );
-        postRepository.delete(existingPost);
         User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User Not Found With ID " + userId)
         );
+        if(!existingUser.getPosts().contains(existingPost.getId())){
+            throw new UnauthorizedActionException("You can't update other's post");
+        }
+        postRepository.delete(existingPost);
         existingUser.getPosts().remove(existingPost.getId());
         userRepository.save(existingUser);
     }

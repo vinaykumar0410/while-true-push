@@ -3,6 +3,7 @@ package com.vinay.blog_app.controller;
 import com.vinay.blog_app.dto.PostRequestDTO;
 import com.vinay.blog_app.dto.PostResponseDTO;
 import com.vinay.blog_app.dto.UserResponseDTO;
+import com.vinay.blog_app.model.Post;
 import com.vinay.blog_app.model.User;
 import com.vinay.blog_app.security.JwtProvider;
 import com.vinay.blog_app.service.PostService;
@@ -13,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/users/user/posts")
+@RequestMapping("/api/v1/posts")
 public class PostController {
 
     @Autowired
@@ -26,7 +29,7 @@ public class PostController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity<PostResponseDTO> createPost(
             @RequestBody PostRequestDTO postRequestDTO,
             @RequestHeader("Authorization") String authHeader
@@ -38,6 +41,48 @@ public class PostController {
                 postRequestDTO), HttpStatus.CREATED);
     }
 
+    @PostMapping("/{postId}")
+    public ResponseEntity<PostResponseDTO> updatePost(
+        @RequestBody PostRequestDTO postRequestDTO,
+        @PathVariable("postId") Long postId,
+        @RequestHeader("Authorization") String authHeader
+    ){
+        UserResponseDTO userResponseDTO = userService.findUserByJwtToken(authHeader);
+        User existingUser = modelMapper.map(userResponseDTO, User.class);
+        PostResponseDTO postResponseDTO = postService.getPostById(postId);
+        Post existingPost = modelMapper.map(postResponseDTO, Post.class);
+        return new ResponseEntity<>(
+          postService.updatePost(existingUser.getId(), existingPost.getId(), postRequestDTO),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/{postId}")
+    public void deletePost(
+            @PathVariable("postId") Long postId,
+            @RequestHeader("Authorization") String authHeader
+    ){
+        UserResponseDTO userResponseDTO = userService.findUserByJwtToken(authHeader);
+        User existingUser = modelMapper.map(userResponseDTO, User.class);
+        postService.deletePost(existingUser.getId(), postId);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PostResponseDTO>> getAllPosts(){
+        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    }
 
 
 }
+
+/*
+
+    PostResponseDTO createPost(Long userId, PostRequestDTO postRequestDTO);
+    PostResponseDTO updatePost(Long userId, Long postId, PostRequestDTO postRequestDTO);
+    void deletePost(Long userId, Long postId); PostResponseDTO getPostById(Long postId);
+    List<PostResponseDTO> getAllPosts();
+    List<PostResponseDTO> searchPosts(String keyword);
+    List<PostResponseDTO> getPostsByCategory(Long categoryId);
+    List<PostResponseDTO> getPostsByUser(Long userId);
+
+ */

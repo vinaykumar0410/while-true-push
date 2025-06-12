@@ -1,5 +1,6 @@
 package com.vinay.blog_app.service;
 
+import com.vinay.blog_app.Exception.UnauthorizedActionException;
 import com.vinay.blog_app.dto.PostRequestDTO;
 import com.vinay.blog_app.dto.PostResponseDTO;
 
