@@ -16,6 +16,7 @@ public class Post {
     @ManyToOne
     private Category category;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     private LocalDateTime createdAt;
 

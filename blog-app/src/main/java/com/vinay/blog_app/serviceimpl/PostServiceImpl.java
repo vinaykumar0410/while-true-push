@@ -15,10 +15,12 @@ import com.vinay.blog_app.repository.UserRepository;
 import com.vinay.blog_app.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PostServiceImpl implements PostService {
 
     @Autowired
@@ -41,7 +43,7 @@ public class PostServiceImpl implements PostService {
         Post post = modelMapper.map(postRequestDTO, Post.class);
         post.setUser(existingUser);
         Post savedPost = postRepository.save(post);
-        existingUser.getPosts().add(post.getId());
+        existingUser.getPosts().add(post);
         userRepository.save(existingUser);
         return modelMapper.map(post, PostResponseDTO.class);
     }

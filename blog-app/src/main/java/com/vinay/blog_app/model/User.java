@@ -16,7 +16,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private String profileImageUrl;
-    private List<Long> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -27,7 +28,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String profileImageUrl, List<Long> posts) {
+    public User(String name, String email, String profileImageUrl, List<Post> posts) {
         this.name = name;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
@@ -66,11 +67,11 @@ public class User {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public List<Long> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Long> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 

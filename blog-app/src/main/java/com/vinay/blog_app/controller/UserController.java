@@ -25,6 +25,7 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> createUser(
             @RequestBody UserRequestDTO userRequestDTO
             ){
+        System.out.println("I am in 1");
         return new ResponseEntity<>(userService.createUser(userRequestDTO), HttpStatus.CREATED);
     }
 

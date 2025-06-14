@@ -72,6 +72,26 @@ public class PostController {
         return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<PostResponseDTO>> searchPosts(
+            @RequestParam("keyword") String keyword
+    ){
+        return new ResponseEntity<>(postService.searchPosts(keyword), HttpStatus.OK);
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<List<PostResponseDTO>> getPostsByCategory(
+            @PathVariable("categoryId") Long categoryId
+    ){
+        return new ResponseEntity<>(postService.getPostsByCategory(categoryId), HttpStatus.OK);
+    }
+
+      @GetMapping("/{userId}")
+    public ResponseEntity<List<PostResponseDTO>> getPostsByUser(
+            @PathVariable("userId") Long userId
+    ){
+        return new ResponseEntity<>(postService.getPostsByUser(userId), HttpStatus.OK);
+    }
 
 }
 
@@ -81,6 +101,7 @@ public class PostController {
     PostResponseDTO updatePost(Long userId, Long postId, PostRequestDTO postRequestDTO);
     void deletePost(Long userId, Long postId); PostResponseDTO getPostById(Long postId);
     List<PostResponseDTO> getAllPosts();
+    
     List<PostResponseDTO> searchPosts(String keyword);
     List<PostResponseDTO> getPostsByCategory(Long categoryId);
     List<PostResponseDTO> getPostsByUser(Long userId);

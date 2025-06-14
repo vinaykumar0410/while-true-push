@@ -16,9 +16,6 @@ public class AuthUser {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<>();
-
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -28,11 +25,10 @@ public class AuthUser {
 
     public AuthUser() {}
 
-    public AuthUser(String name, String email, String password, List<Post> posts) {
+    public AuthUser(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.posts = posts;
     }
 
     // Getters and Setters
@@ -48,9 +44,6 @@ public class AuthUser {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public List<Post> getPosts() { return posts; }
-    public void setPosts(List<Post> posts) { this.posts = posts; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

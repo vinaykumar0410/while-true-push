@@ -23,9 +23,8 @@ public class JwtValidator extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
-        if(authHeader != null){
-            String token = authHeader.substring(7);
+        String token = request.getHeader("Authorization");
+        if(token != null){
             String email = jwtProvider.getEmailFromToken(token);
             Authentication auth = new UsernamePasswordAuthenticationToken(
                     email,
