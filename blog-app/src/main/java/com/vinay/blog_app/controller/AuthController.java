@@ -25,7 +25,7 @@ public class AuthController {
         return new ResponseEntity<>(authService.signUp(authRequestDTO), HttpStatus.CREATED);
     }
 
-     @PostMapping("/signin")
+    @PostMapping("/signin")
     public ResponseEntity<String> signIn(
             @RequestBody AuthRequestDTO authRequestDTO
             ){
